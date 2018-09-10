@@ -1,18 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CardSystem
 {
     class DeckofCards : Card
     {
         const int NUM_OF_CARDS = 20; // Number of total cards in the game
-        private readonly Card[] deck; // array of all playing cards in the deck
+        private readonly List<Card> deck; // array of all playing cards in the deck
 
         public DeckofCards()
         {
-            deck = new Card[NUM_OF_CARDS]; // Deck with the total number of cards in the game
+            deck = new List<Card>(); // Deck with the total number of cards in the game
         }
 
-        public Card[] getDeck { get { return deck; } } // Get the current deck
+        public List<Card> getDeck { get { return deck; } } // Get the current deck
 
         //Create deck of 20 cards: 5 values with 4 suits
         public void SetUpDeck()
@@ -22,7 +24,7 @@ namespace CardSystem
             {
                 foreach(VALUE v in Enum.GetValues(typeof(VALUE)))
                 {
-                    deck[i] = new Card { CardSuit = s, CardValue = v };
+                    deck.Add(new Card { CardSuit = s, CardValue = v });
                     i++;
                 }
             }
@@ -47,6 +49,18 @@ namespace CardSystem
                     deck[secondCardIndex] = tempcard;
                 }
             }
+        }
+        public List<Card> GiveHand(List<Card> Hand)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Random r = new Random();
+                int randomint = r.Next(deck.Count);
+                Hand.Add(deck[randomint]);
+                deck.Remove(deck[randomint]);
+            }
+
+            return Hand;
         }
     }
 }

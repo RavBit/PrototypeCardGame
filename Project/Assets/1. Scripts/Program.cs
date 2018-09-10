@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 namespace CardSystem
 {
     public class Program : MonoBehaviour
     {
+        //Temp instance for player. Remove this later
+        [SerializeField]
+        public Player player;
         [SerializeField]
         public List<Card> CardDeck;
         // Use this for initialization
@@ -15,12 +19,14 @@ namespace CardSystem
             CardDeck = new List<Card>();
             DeckofCards dc = new DeckofCards();
             dc.SetUpDeck();
-            Card[] cd = dc.getDeck;
-            foreach (Card c in cd)
+            CardDeck = dc.getDeck;
+            foreach (Card c in CardDeck)
             {
                 Debug.Log("Suit: " + c.CardSuit + "- Value " + c.CardValue);
-                CardDeck.Add(c);
             }
+            player = new Player();
+            dc.GiveHand(player.Hand);
+            CardDeck = dc.getDeck;
         }
     }
 }
